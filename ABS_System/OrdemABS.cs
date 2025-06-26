@@ -48,31 +48,5 @@ namespace ABS_System
 
 
 
-
-
-
-        //public void getOrdesABS()
-        //{
-        //    var orderToSand = new ConstrutorPedido();
-
-        //    this.drinkType = orderToSand.drinkType;
-        //    this.drinkFlavor = orderToSand.drinkFlavor;
-        //    this.drinkSize = orderToSand.drinkSize;
-        //    this.orderType = orderToSand.orderType;
-
-        //    this.cupType = this.drinkType == "Suco"? "Plastico" : "Papel";
-        //    this.iceAmount = this.drinkType == "Suco" ? 12 : 6 ;
-        //    this.coverType = this.orderType == "local" ? "Tampa furada" : "Tampa lacrada";
-
-
-        //    EnviarOrdemAoABS(this.drinkType, this.drinkFlavor,this.drinkSize,this.orderType,this.cupType,this.iceAmount,this.coverType);
-
-
-        //}
-
-        //private void EnviarOrdemAoABS(string drinkType,string drinkFlavor, string drinkSize, string orderType,string cupType, int iceAmount, string coverType)
-        //{ 
-        //    Console.WriteLine($"A bebida selecionada {drinkType} {drinkFlavor}, foi servida em: Copo de {cupType}, Contendo: {iceAmount} pedras de gelo, com {drinkSize}ml, e {coverType}");
-        //}
     }
 }
