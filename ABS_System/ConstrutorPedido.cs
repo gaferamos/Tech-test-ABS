@@ -33,165 +33,187 @@ namespace ABS_System
 
         private string GetDrinkType ()
         {
-            selectdrink:
-            Console.Clear();
-            Console.WriteLine("Tipos de bebida: ");
-            foreach (var drink in bebidas)
-            {  
-                Console.WriteLine(drink.Key);
-                
-            }
-
-            try
+            while (true)
             {
-                Console.WriteLine("Escolha o tipo de bebida: ");
-                var drinkType = Console.ReadLine();
-                if (bebidas.ContainsKey(drinkType))
+                Console.Clear();
+                Console.WriteLine("Tipos de bebida: ");
+                foreach (var drink in bebidas)
                 {
-                    drinkType = bebidas.First(kvp => string.Equals(kvp.Key, drinkType, StringComparison.OrdinalIgnoreCase)).Key;
-                }
-                else
-                {
-                    goto selectdrink;
+                    Console.WriteLine(drink.Key);
                 }
 
-
-                return drinkType;
+                Console.Write("Escolha o tipo de bebida: ");
+                try
+                {
+                    var drinkType = Console.ReadLine();
+                    if (drinkType != null)
+                    {
+                        if (bebidas.ContainsKey(drinkType))
+                        {
+                            return bebidas.First(kvp => string.Equals(kvp.Key, drinkType, StringComparison.OrdinalIgnoreCase)).Key;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                Console.WriteLine("invalido, escreva o tipo de bebida que deseja");
+                Console.ReadKey();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            
         }
 
 
         private string GetDrinkFlavor(string drinkType)
         {
-            selectflavor:
-            Console.Clear();
-            Console.WriteLine("Sabores de bebida: ");
-            if (bebidas.TryGetValue(drinkType, out var flavors))
+            while (true)
             {
-                foreach (var flavor in flavors)
+                Console.Clear();
+                Console.WriteLine("Sabores de bebida: ");
+                if (bebidas.TryGetValue(drinkType, out var flavors))
                 {
-                    Console.WriteLine(flavor);
+                    foreach (var flavor in flavors)
+                    {
+                        Console.WriteLine(flavor);
+                    }
                 }
-            }
-
-            try
-            {
-                Console.WriteLine(format: "Escolha um sabor de {0}: ", drinkType);
-                var drinkFlavor = Console.ReadLine();
-
-                drinkFlavor = flavors.FirstOrDefault(f => string.Equals(f, drinkFlavor, StringComparison.OrdinalIgnoreCase));
-
-                if (drinkFlavor != null)
+                Console.Write(format: "Escolha um sabor de {0}: ", drinkType);
+                try
                 {
-                    return drinkFlavor;
+                    var drinkFlavor = Console.ReadLine();
+                    if (drinkFlavor != null)
+                    {
+                        drinkFlavor = flavors.FirstOrDefault(f => string.Equals(f, drinkFlavor, StringComparison.OrdinalIgnoreCase));
+                        if (drinkFlavor != null)
+                        {
+                            return drinkFlavor;
+
+                        }
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    goto selectflavor;
+                    Console.WriteLine(e);
+                    throw;
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
+                Console.WriteLine("invalido, escreva o sabor de bebida que deseja");
+                Console.ReadKey();
             }
         }
         
         private string GetDrinkSize(string drinkType)
         {
             ushort[] drinksize = new ushort[] { 300, 500, 700 };
-            string size = "";
-
-            selectdeinksize:
-            Console.Clear();
-            Console.WriteLine("Tamanho de bebida: ");
-            if (drinkType == "Refrigerante")
+            switch (drinkType)
             {
-                
-                for (int i = 0; i < drinksize.Length; i++)
+                case "Refrigerante":
                 {
-                    Console.WriteLine(format: " {0} - {1}ml", i + 1, drinksize[i]);
-                }
-
-                try
-                {
-                    Console.Write("Escolha o tamanho da bebida: ");
-                    ushort.TryParse(Console.ReadLine(), out ushort option);
-                    if (option < 1 || option > drinksize.Length)
+                    while (true)
                     {
-                        goto selectdeinksize;
+                        Console.Clear();
+                        Console.WriteLine("Tamanho de bebida: ");
+                        for (int i = 0; i < drinksize.Length; i++)
+                        {
+                            Console.WriteLine(format: " {0} - {1}ml", i + 1, drinksize[i]);
+                        }
+                        Console.Write("Escolha o tamanho da bebida: ");
+                        try
+                        {
+                            if (ushort.TryParse(Console.ReadLine(), out ushort option))
+                            {
+                                if (option > 0 && option <= drinksize.Length)
+                                {
+                                    return (drinksize[option - 1]).ToString();
+
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
+                        }
+
+                        Console.Write("invalido, escolha um valor que represente o tamanho desejado de bebida ");
+                        Console.ReadKey();
                     }
-                    size = (drinksize[option - 1]).ToString();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
                 }
 
-            }
-            if (drinkType == "Suco")
-            {
-                
-                for (int i = 0; i < drinksize.Length - 1; i++)
+                case "Suco":
                 {
-                    Console.WriteLine(format: " {0} - {1}ml", i + 1, drinksize[i]);
-                }
-
-                try
-                {
-                    Console.Write("Escolha o tamanho da bebida: ");
-                    ushort.TryParse(Console.ReadLine(), out ushort option);
-
-                    if (option < 1 || option > drinksize.Length - 1)
+                    while (true)
                     {
-                        goto selectdeinksize;
+                        Console.Clear();
+                        Console.WriteLine("Tamanho de bebida: ");
+                        for (int i = 0; i < drinksize.Length - 1; i++)
+                        {
+                            Console.WriteLine(format: " {0} - {1}ml", i + 1, drinksize[i]);
+                        }
+                        Console.Write("Escolha o tamanho da bebida: ");
+                        try
+                        {
+                            if (ushort.TryParse(Console.ReadLine(), out ushort option))
+                            {
+                                if (option > 0 && option <= drinksize.Length - 1)
+                                {
+                                    return (drinksize[option - 1]).ToString();
+
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
+                        }
+
+                        Console.Write("invalido, escolha um valor que represente o tamanho desejado de bebida ");
+                        Console.ReadKey();
                     }
 
-                    size = (drinksize[option - 1]).ToString();
                 }
-                catch (Exception e)
+
+                default:
                 {
-                    Console.WriteLine(e);
-                    throw;
+                    return "";
                 }
             }
-
-            return size;
+            
         }
 
         private string GetOrderType()
         {
-            selectOrderType:
-            Console.Clear();
-            Console.WriteLine("Tipo do pedido:");
-            var typeOfOrder = new string[] { "Viagem", "Local" };
-            for (int i = 0; i < typeOfOrder.Length; i++)
+            while (true)
             {
-                Console.WriteLine(format:"{0} - {1}", i + 1, typeOfOrder[i]);
-            }
-
-            try
-            {
+                Console.Clear();
                 Console.WriteLine("Tipo do pedido:");
-                ushort.TryParse(Console.ReadLine(), out ushort option);
-
-                if (option < 1 || option > typeOfOrder.Length)
+                var typeOfOrder = new string[] { "Viagem", "Local" };
+                for (int i = 0; i < typeOfOrder.Length; i++)
                 {
-                    goto selectOrderType;
+                    Console.WriteLine(format: "{0} - {1}", i + 1, typeOfOrder[i]);
                 }
-                return typeOfOrder[option - 1].ToLower();
+                Console.WriteLine("Escolha o tipo de seu pedido");
+                try
+                {
+                    if (ushort.TryParse(Console.ReadLine(), out ushort option))
+                    {
+                        if (option > 0 && option <= typeOfOrder.Length)
+                        {
+                            return typeOfOrder[option - 1].ToLower();
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                Console.WriteLine("invalido digite o valor correspondente ao tipo do pedio");
+                Console.ReadKey();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+           
         }
     }
 }

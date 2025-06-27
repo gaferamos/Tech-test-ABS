@@ -41,7 +41,21 @@ namespace ABS_System
             cupType = drinkType == "Suco" ? "Plastico" : "Papel";
             iceAmount = drinkType == "Suco" ? 12 : 6;
             coverType = orderType == "local" ? "Tampa furada" : "Tampa lacrada";
+            
+            Console.Clear();
+            Console.WriteLine("adicionar gelo [s/n]");
+            var iceoption = Console.ReadLine().ToLower();
+            while (iceoption != "s" && iceoption != "n")
+            {
+                Console.Clear();
+                Console.WriteLine("adicionar gelo [s/n]");
+                iceoption = Console.ReadLine().ToLower();
+            }
 
+            if (iceoption == "n")
+            {
+                iceAmount = 0;
+            }
             Console.WriteLine($"A bebida selecionada {drinkType} {drinkFlavor}, foi servida em: Copo de {cupType}, Contendo: {iceAmount} pedras de gelo, com {drinkSize}ml, e {coverType}");
             Console.ReadKey();
         }
